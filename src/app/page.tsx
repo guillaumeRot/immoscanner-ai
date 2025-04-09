@@ -1,102 +1,243 @@
-import Image from "next/image";
+import { FaChartLine, FaFilePdf, FaShare, FaStar } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="fixed w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16 items-center">
+            <div className="flex items-center">
+              <span className="text-2xl font-bold text-blue-600">
+                ImmoScanner AI
+              </span>
+            </div>
+            <nav className="hidden md:flex items-center space-x-8">
+              <a href="#" className="text-gray-600 hover:text-blue-600">
+                Accueil
+              </a>
+              <a href="#" className="text-gray-600 hover:text-blue-600">
+                Fonctionnalités
+              </a>
+              <a href="#" className="text-gray-600 hover:text-blue-600">
+                Tarifs
+              </a>
+              <a href="#" className="text-gray-600 hover:text-blue-600">
+                Connexion
+              </a>
+              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                Essayer gratuitement
+              </button>
+            </nav>
+            <button className="md:hidden text-gray-600">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </header>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+                Analyse instantanée de vos annonces immobilières
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Collez une annonce et découvrez son potentiel locatif ou sa
+                rentabilité en un clic, grâce à l&apos;IA.
+              </p>
+              <button className="px-8 py-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                Analyser une annonce maintenant
+              </button>
+            </div>
+            <div className="bg-gray-100 rounded-xl p-8">
+              <div className="aspect-video bg-white rounded-lg shadow-lg">
+                {/* Placeholder pour le mockup */}
+                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  Interface d&apos;analyse
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaChartLine className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">
+                Analyse IA instantanée
+              </h3>
+              <p className="text-gray-600">
+                L&apos;outil lit l&apos;annonce et vous donne un résumé clair.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaFilePdf className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">
+                Rentabilité estimée
+              </h3>
+              <p className="text-gray-600">
+                Calculez le rendement locatif en 1 clic.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FaShare className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">PDF & Partage</h3>
+              <p className="text-gray-600">
+                Exportez vos analyses ou partagez-les facilement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="w-5 h-5 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-4">
+                &quot;En tant qu&apos;investisseur, je gagne un temps fou avec
+                ImmoScanner AI. L&apos;analyse est rapide et précise.&quot;
+              </p>
+              <p className="font-semibold text-gray-900">Julie M.</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="w-5 h-5 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-4">
+                &quot;L&apos;outil m&apos;a permis d&apos;identifier plusieurs
+                opportunités que j&apos;aurais manquées autrement.&quot;
+              </p>
+              <p className="font-semibold text-gray-900">Thomas L.</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className="w-5 h-5 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-4">
+                &quot;La fonction d&apos;export PDF est géniale pour partager
+                mes analyses avec mes associés.&quot;
+              </p>
+              <p className="font-semibold text-gray-900">Sophie D.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 bg-blue-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Prêt à scanner votre première annonce ?
+          </h2>
+          <button className="px-8 py-4 bg-white text-blue-600 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+            Essayer gratuitement sans inscription
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4">ImmoScanner AI</h3>
+              <p className="text-gray-400">
+                L&apos;outil intelligent pour analyser vos annonces
+                immobilières.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Liens utiles</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Mentions légales
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Contact
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Conditions d&apos;utilisation
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Réseaux sociaux</h4>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <FaXTwitter className="w-6 h-6" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <FaLinkedin className="w-6 h-6" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white">
+                  <FaGithub className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
+              <p className="text-gray-400 mb-4">
+                Restez informé des dernières fonctionnalités.
+              </p>
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="Votre email"
+                  className="px-4 py-2 rounded-l-lg w-full"
+                />
+                <button className="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700">
+                  S&apos;inscrire
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+            <p>© 2024 ImmoScanner AI. Tous droits réservés.</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
