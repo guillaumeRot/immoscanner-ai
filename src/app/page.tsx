@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { FaChartLine, FaFilePdf, FaShare, FaStar } from "react-icons/fa";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
@@ -26,9 +28,11 @@ export default function Home() {
               <a href="#" className="text-gray-600 hover:text-blue-600">
                 Connexion
               </a>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                Essayer gratuitement
-              </button>
+              <Link href="/analyse">
+                <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  Essayer gratuitement
+                </button>
+              </Link>
             </nav>
             <button className="md:hidden text-gray-600">
               <svg
@@ -69,7 +73,14 @@ export default function Home() {
               <div className="aspect-video bg-white rounded-lg shadow-lg">
                 {/* Placeholder pour le mockup */}
                 <div className="w-full h-full flex items-center justify-center text-gray-400">
-                  Interface d&apos;analyse
+                  <Image
+                    src="/mockup.png"
+                    alt="Interface ImmoScanner AI"
+                    width={800}
+                    height={450}
+                    className="w-full h-full object-cover rounded-lg"
+                    priority
+                  />
                 </div>
               </div>
             </div>
@@ -119,6 +130,15 @@ export default function Home() {
       {/* Testimonials Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Ce que nos utilisateurs en disent
+            </h2>
+            <p className="text-xl text-gray-600">
+              Découvrez les retours d&apos;expérience de nos utilisateurs
+              satisfaits
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-lg">
               <div className="flex mb-4">
