@@ -1,7 +1,13 @@
 "use client";
 
+import OpenAI from "openai";
 import { useState } from "react";
 import { FaCheck, FaFilePdf, FaLinkedin, FaShare } from "react-icons/fa";
+
+const openai = new OpenAI({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
 
 export default function AnalysePage() {
   const [annonce, setAnnonce] = useState("");
@@ -10,20 +16,59 @@ export default function AnalysePage() {
     score: number;
     pointsForts: string[];
   } | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const analyserAnnonce = () => {
-    // Simulation d&apos;une analyse
-    setResultats({
-      resume:
-        "Appartement lumineux de 75m² situé dans un quartier résidentiel calme. Proche des commodités et des transports. Prix attractif pour le secteur.",
-      score: 7.5,
-      pointsForts: [
-        "Surface généreuse",
-        "Emplacement stratégique",
-        "Prix compétitif",
-        "État impeccable",
-      ],
-    });
+  const analyserAnnonce = async () => {
+    setLoading(true);
+    try {
+      const prompt = `Analyse cette annonce immobilière et fournis :
+1. Un résumé concis des points clés
+2. Un score de rentabilité sur 10
+3. Une liste des points forts
+
+Annonce : ${annonce}`;
+
+      const completion = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content:
+              "Tu es un expert en analyse immobilière. Tu dois analyser des annonces immobilières et fournir une évaluation objective.",
+          },
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        temperature: 0.7,
+      });
+
+      const response = completion.choices[0].message.content;
+
+      if (!response) return;
+
+      // Extraction des informations de la réponse
+      const resume = response.split("\n")[0];
+      const score = parseFloat(
+        response.match(/score de rentabilité : (\d+(\.\d+)?)/i)?.[1] || "0"
+      );
+      const pointsForts = response
+        .split("\n")
+        .slice(2)
+        .filter((line) => line.trim());
+
+      setResultats({
+        resume,
+        score,
+        pointsForts,
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'analyse:", error);
+      // Gérer l'erreur ici
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,9 +120,12 @@ export default function AnalysePage() {
             <div className="text-center">
               <button
                 onClick={analyserAnnonce}
-                className="px-8 py-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                disabled={loading}
+                className={`px-8 py-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Analyser l&apos;annonce
+                {loading ? "Analyse en cours..." : "Analyser l'annonce"}
               </button>
               <p className="mt-2 text-sm text-gray-500">
                 Aucune inscription requise
