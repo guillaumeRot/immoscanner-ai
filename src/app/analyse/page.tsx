@@ -2,7 +2,7 @@
 
 import OpenAI from "openai";
 import { useState } from "react";
-import { FaCheck, FaFilePdf, FaLinkedin, FaShare } from "react-icons/fa";
+import { FaCheck, FaExclamationTriangle, FaLinkedin } from "react-icons/fa";
 
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -15,18 +15,31 @@ export default function AnalysePage() {
     resume: string;
     score: number;
     pointsForts: string[];
+    risques: string[];
+    potentiel: string;
   } | null>(null);
   const [loading, setLoading] = useState(false);
 
   const analyserAnnonce = async () => {
     setLoading(true);
     try {
-      const prompt = `Analyse cette annonce immobilière et fournis :
-1. Un résumé concis des points clés
-2. Un score de rentabilité sur 10
-3. Une liste des points forts
-
-Annonce : ${annonce}`;
+      const prompt = `Tu es un expert en investissement immobilier locatif.   
+  
+  Analyse l'annonce immobilière suivante comme si tu parlais à un investisseur.  
+  1. Résume brièvement le bien (type, localisation, surface, nombre de pièces, étage, etc). 
+  2. Déduis les points positifs de cette annonce (emplacement, rendement, état du bien, etc). 
+  3. Identifie les points à vérifier ou les risques potentiels (charges, vacance, rénovation, etc). 
+  4. Estime le potentiel locatif ou la rentabilité si des informations suffisantes sont disponibles.
+  5. Un score de rentabilité sur 10 
+  
+  Tu vas retourner ces informations sous format json tel que:
+  - Le resumé sera la valeur de la clé "resume"
+  - Les points positifs seront la valeur de la clé "pointsPositifs"
+  - Les risques seront la valeur de la clé "risques"
+  - Le potentiel sera la valeur de la clé "potentiel"
+  - Le score sera la valeur de la clé "score"
+  
+  Annonce : ${annonce}`;
 
       const completion = await openai.chat.completions.create({
         messages: [
@@ -45,27 +58,18 @@ Annonce : ${annonce}`;
       });
 
       const response = completion.choices[0].message.content;
-
       if (!response) return;
 
-      // Extraction des informations de la réponse
-      const resume = response.split("\n")[0];
-      const score = parseFloat(
-        response.match(/score de rentabilité : (\d+(\.\d+)?)/i)?.[1] || "0"
-      );
-      const pointsForts = response
-        .split("\n")
-        .slice(2)
-        .filter((line) => line.trim());
-
+      const result = JSON.parse(response);
       setResultats({
-        resume,
-        score,
-        pointsForts,
+        resume: result.resume,
+        score: result.score,
+        pointsForts: result.pointsPositifs,
+        risques: result.risques,
+        potentiel: result.potentiel,
       });
     } catch (error) {
       console.error("Erreur lors de l'analyse:", error);
-      // Gérer l'erreur ici
     } finally {
       setLoading(false);
     }
@@ -144,15 +148,6 @@ Annonce : ${annonce}`;
                   <p className="text-gray-600">{resultats.resume}</p>
                 </div>
 
-                <div className="flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-blue-600 mb-2">
-                      {resultats.score}/10
-                    </div>
-                    <div className="text-gray-600">Score de rentabilité</div>
-                  </div>
-                </div>
-
                 <div>
                   <h3 className="text-lg font-semibold mb-4">Points forts</h3>
                   <ul className="space-y-3">
@@ -165,15 +160,34 @@ Annonce : ${annonce}`;
                   </ul>
                 </div>
 
-                <div className="flex justify-center space-x-4 pt-4">
-                  <button className="flex items-center px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
-                    <FaShare className="w-5 h-5 mr-2" />
-                    Partager
-                  </button>
-                  <button className="flex items-center px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50">
-                    <FaFilePdf className="w-5 h-5 mr-2" />
-                    Télécharger PDF
-                  </button>
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Risques à considérer
+                  </h3>
+                  <ul className="space-y-3">
+                    {resultats.risques.map((risque, index) => (
+                      <li key={index} className="flex items-center">
+                        <FaExclamationTriangle className="w-5 h-5 text-yellow-500 mr-2" />
+                        <span className="text-gray-600">{risque}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">
+                    Potentiel locatif
+                  </h3>
+                  <p className="text-gray-600">{resultats.potentiel}</p>
+                </div>
+
+                <div className="flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-blue-600 mb-2">
+                      {resultats.score}/10
+                    </div>
+                    <div className="text-gray-600">Score de rentabilité</div>
+                  </div>
                 </div>
               </div>
             </div>
